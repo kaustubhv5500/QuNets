@@ -4,9 +4,10 @@ from qunetsim.components import Network
 from qunetsim.objects import Qubit
 from qunetsim.objects import Logger
 
+# Introduction to Quantum Networks: Homework 1
+# Author: Kaustubh Venkatesh; 03765695
 # Set to False, to get more information
 Logger.DISABLED = True
-
 
 def sender_protocol(host, receiver):
     secret = "It must be remembered that there is nothing more difficult to plan, more doubtful of success, nor more dangerous to manage, than the creation of a new system. For the initiator has the enmity of all who would profit by the preservation of the old institutions, and merely lukewarm defenders in those who would gain by the new ones."
@@ -49,8 +50,6 @@ def sender_protocol(host, receiver):
         print(f"Secret sent; {secret}")
         print(f"Secret received: '{recv_secret}'")
 
-
-
 def receiver_protocol(host, sender):
     secret_bits = []
     while True:
@@ -84,7 +83,6 @@ def receiver_protocol(host, sender):
     # Secret Verify
     # TODO: Send the secret (variable secret) back to the sender for verification.
     host.send_classical(sender, secret)
-
 
 def main():
     # TODO: get the Network() instance
