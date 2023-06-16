@@ -91,10 +91,6 @@ def quantum_player(host, ref, angle):
     u = (1 / np.sqrt(2)) * np.array([[a, 1], [-1, 1 / a]])
     # q.custom_gate(u)
 
-    # ux = np.array([np.cos(angle/2), -1j*np.sin(angle/2)], [-1j*np.sin(angle/2), np.cos(angle/2)])
-    # uy = np.array([np.cos(angle/2), -np.sin(angle/2)], [np.sin(angle/2), np.cos(angle/2)])
-    # uz = np.array([np.exp(-1j*angle/2), 0], [0, np.exp(1j*angle/2)])
-
     # Using the built-in unitary rotation operators instead of the defined unitary for the quantum strategy
     q.rz(gamma)
     q.ry(-np.pi/2)
@@ -117,10 +113,10 @@ def main():
 
     # Select the strategy for the simulation
     # classical
-    strategy = 'q'
+    # strategy = 'c'
 
     # quantum
-    # strategy = 'q'
+    strategy = 'q'
 
     # Number of players
     n = 8
