@@ -79,16 +79,28 @@ def quantum_player(host, ref, angle):
 
     # TODO: Use the correct unitary according to the optimal quantum strategy
     # Hint: rotation operations can be performed on a qubit using q.rx(angle), q.ry(angle), q.rz(angle)
-    # Perform the correct unitary operation
+    # Perform the correct unitary operation using rotation unitaries
+    # To use custom gates instead of the unitary rotations, uncomment the call to the custom function and comment the unitary rotation calls
     if x == 0:
         a = np.exp(1j * (np.pi/2 + angle))
+        gamma = -(np.pi/2 + angle)
     else:
         a = np.exp(1j * angle)
+        gamma = -angle
 
     u = (1 / np.sqrt(2)) * np.array([[a, 1], [-1, 1 / a]])
-    q.custom_gate(u)
-    host.send_classical(ref, q.measure(), no_ack=True)
+    # q.custom_gate(u)
 
+    # ux = np.array([np.cos(angle/2), -1j*np.sin(angle/2)], [-1j*np.sin(angle/2), np.cos(angle/2)])
+    # uy = np.array([np.cos(angle/2), -np.sin(angle/2)], [np.sin(angle/2), np.cos(angle/2)])
+    # uz = np.array([np.exp(-1j*angle/2), 0], [0, np.exp(1j*angle/2)])
+
+    # Using the built-in unitary rotation operators instead of the defined unitary for the quantum strategy
+    q.rz(gamma)
+    q.ry(-np.pi/2)
+    q.rz(gamma)
+
+    host.send_classical(ref, q.measure(), no_ack=True)
 
 def main():
     # Get and start the network
@@ -105,7 +117,7 @@ def main():
 
     # Select the strategy for the simulation
     # classical
-    strategy = 'c'
+    strategy = 'q'
 
     # quantum
     # strategy = 'q'
@@ -162,7 +174,6 @@ def main():
     print("Win percentage was: %.3f" % (wins / plays))
     print("Optimal is %.3f" % p)
     network.stop(True)
-
 
 if __name__ == '__main__':
     main()
